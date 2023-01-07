@@ -1,20 +1,6 @@
-<div align="center">
-  <p>Node.js / AWS -  Email Handler serverless application. </p>
-  <div>
-
-[![Version][npm-version-shield]][npm]
-[![Build][github-ci-shield]][github-ci]
-[![Downloads][npm-stats-shield]][npm-stats]
-[![License][license-shield]][license]
-
-  </div>
-</div>
-
 ## Node.js / AWS -  Email Handler serverless application.
 
 ## About
-Node.js / AWS -  Email Handler serverless application. 
-
 This project includes two email micro services which work with Amazon Web Services SDK V3, that share the same data and resources yet can be deployed independently using Bitbucket pipelines. 
 
 The Email Builder Application is used to automatically build, generate and store customized, localized (LTR/RTL), rich media email templates using the Maizzle framework, Handlebars, AWS Lambda, EFS, S3 and Cloudflare. These templates can be generated with any language and content, which can be easily set and triggered from messages sent to AWS Lambda, an API endpoint, or simply through the command line.
