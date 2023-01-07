@@ -1,0 +1,137 @@
+image: node:14.16.0
+
+pipelines:
+  branches:
+    develop:
+      - step:
+          name: Test Email Builder and deploy test coverage to bitbucket downloads
+          caches:
+            - node
+          artifacts:
+            - _artifacts/**
+
+          script:
+            - cd email_builder/
+            - npm ci
+            - npm run lint
+            - npm run test
+            - apt-get update && apt-get install --yes zip
+            - npm run artifacts
+            - pipe: atlassian/bitbucket-upload-file:0.1.2
+
+              variables:
+                BITBUCKET_USERNAME: $BITBUCKET_USERNAME
+                BITBUCKET_APP_PASSWORD: $BITBUCKET_APP_PASSWORD
+                FILENAME: "_artifacts/email_builder_tests_coverage.zip"
+
+      - step:
+          name: Test Email Sender and deploy test coverage to bitbucket downloads
+          caches:
+            - node
+          artifacts:
+            - _artifacts/email_sender_tests_coverage.zip
+
+          script:
+            - cd email_sender/
+            - npm ci
+            - npm run lint
+            - npm run test
+            - apt-get update && apt-get install --yes zip
+            - npm run artifacts
+            - pipe: atlassian/bitbucket-upload-file:0.1.2
+
+              variables:
+                BITBUCKET_USERNAME: $BITBUCKET_USERNAME
+                BITBUCKET_APP_PASSWORD: $BITBUCKET_APP_PASSWORD
+                FILENAME: "_artifacts/email_sender_tests_coverage.zip"
+
+      - step:
+          name: Test and Deploy Email Sender to S3 bucket
+          caches:
+            - node
+          artifacts:
+            - _builds/**
+
+          script:
+            - cd email_sender/
+            - npm ci
+            - npm run lint
+            - npm run test
+            - apt-get update && apt-get install --yes zip
+            - npm run package
+            - pipe: atlassian/aws-s3-deploy:1.1.0
+
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_KEY
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET
+                AWS_DEFAULT_REGION: "eu-west-1"
+                S3_BUCKET: "email-handler-resources-dev/artifacts"
+                LOCAL_PATH: "_builds/"
+                DEBUG: "TRUE"
+
+    staging:
+      - step:
+          name: Test Email Builder and deploy test coverage to bitbucket downloads
+          caches:
+            - node
+          artifacts:
+            - _artifacts/**
+
+          script:
+            - cd email_builder/
+            - npm ci
+            - npm run lint
+            - npm run test
+            - apt-get update && apt-get install --yes zip
+            - npm run artifacts
+            - pipe: atlassian/bitbucket-upload-file:0.1.2
+
+              variables:
+                BITBUCKET_USERNAME: $BITBUCKET_USERNAME
+                BITBUCKET_APP_PASSWORD: $BITBUCKET_APP_PASSWORD
+                FILENAME: "_artifacts/email_builder_tests_coverage.zip"
+
+      - step:
+          name: Test Email Sender and deploy test coverage to bitbucket downloads
+          caches:
+            - node
+          artifacts:
+            - _artifacts/**
+
+          script:
+            - cd email_sender/
+            - npm ci
+            - npm run lint
+            - npm run test
+            - apt-get update && apt-get install --yes zip
+            - npm run artifacts
+            - pipe: atlassian/bitbucket-upload-file:0.1.2
+
+              variables:
+                BITBUCKET_USERNAME: $BITBUCKET_USERNAME
+                BITBUCKET_APP_PASSWORD: $BITBUCKET_APP_PASSWORD
+                FILENAME: "_artifacts/email_sender_tests_coverage.zip"
+
+      - step:
+          name: Test and Deploy Email Sender to S3 bucket
+          caches:
+            - node
+          artifacts:
+            - _builds/app.zip
+
+          script:
+            - cd email_sender/
+            - npm ci
+            - npm run lint
+            - npm run test
+            - apt-get update && apt-get install --yes zip
+            - npm run package
+            - pipe: atlassian/aws-s3-deploy:1.1.0
+
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_KEY
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET
+                AWS_DEFAULT_REGION: "eu-west-1"
+                S3_BUCKET: "email-handler-resources-staging/artifacts"
+                LOCAL_PATH: "_builds/"
+                DEBUG: "TRUE"

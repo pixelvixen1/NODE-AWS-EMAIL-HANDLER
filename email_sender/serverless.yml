@@ -1,0 +1,44 @@
+service: self-assessment-email-handler
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: eu-west-1
+  environment:
+    NODE_ENV: ${opt:stage}
+
+plugins:
+  - serverless-s3-sync
+
+custom:
+  fileSystemArn-dev: arn:aws:elasticfilesystem:eu-west-1:901384348678:access-point/fsap-0ef2dab4448af1054
+  fileSystemArn-staging: arn:aws:elasticfilesystem:eu-west-1:901384348678:access-point/fsap-0ad65239a9a478b62
+  fileSystemArn: ${self:custom.fileSystemArn-${opt:stage}}
+  sqsArn-dev: arn:aws:sqs:eu-west-1:901384348678:self-assessment-email-queue.fifo
+  sqsArn-staging: arn:aws:sqs:eu-west-1:901384348678:self-assessment-email-queue-staging.fifo
+  sqsArn: ${self:custom.sqsArn-${opt:stage}}
+
+  s3Sync:
+    - bucketName: email-handler-resources-${opt:stage}
+      bucketPrefix: templates_hbs/
+      localDir: ../dist/templates_hbs
+
+    - bucketName: email-handler-resources-${opt:stage}
+      bucketPrefix: templates/
+      localDir: ../dist/templates
+
+functions:
+  api:
+    handler: aws/index.handler
+    memorySize: 512
+    events:
+      - sqs: ${self:custom.sqsArn}
+    vpc:
+      securityGroupIds:
+        - sg-06bac5294c3c50053
+      subnetIds:
+        - subnet-0e998e81c2f926c5a
+    fileSystemConfig:
+      arn: ${self:custom.fileSystemArn}
+      localMountPath: /mnt/cms

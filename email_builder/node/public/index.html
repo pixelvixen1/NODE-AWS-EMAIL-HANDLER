@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>SELF ASSESSMENT EMAIL HANDLER NODE API EXAMPLE</title>
+</head>
+
+<body style="padding: 20px;">
+  <h1>SELF ASSESSMENT EMAIL HANDLER</h1>
+  <h3>POST: /aws/build-email</h3>
+  <p>Post data to generate an email build based on a template and language</p>
+  <p>
+    {
+    "templateId": "reset-password",
+      "data": {
+      "name" : "Sam Jones",
+      "email" : "sam@gmail.com"
+    },
+    "language": "en-GB"
+    }
+  </p>
+
+  <br/>
+  <h3>GET: /aws/user-email</h3>
+  <p><a href="/aws/user-email" target="_blank">Route to preview the generated html email template with passed data</a></p>
+  <br />
+
+  <h3>GET: /aws/user-email-text</h3>
+  <p><a href="/aws/user-email-text" target="_blank">Route to preview the generated txt email template with passed data</a></p>
+  <br />
+
+  <h3>GET: /templates</h3>
+  <p><a href="/templates" target="_blank">Route to preview a folder directory of the html and text emails with populated data</a></p>
+  <br />
+
+  <h3>GET: /templates-hbs</h3>
+  <p><a href="/templates-hbs/" target="_blank">Route to preview a folder directory of the html and text emails with handlebars</a></p>
+  <br />
+
+
+  <h3>GET: /templates-user</h3>
+  <p><a href="/templates-user/" target="_blank">Route to preview a folder directory of the html and text emails generated with user data</a></p>
+  <br />
+
+  <h3>GET: /cms</h3>
+  <p><a href="/cms/" target="_blank">Route to preview local cms files for testing</a></p>
+  <br />
+
+
+
+</body>
+
+</html>

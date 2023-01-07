@@ -1,0 +1,44 @@
+{
+  "name": "self-assessment-email-handler",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "aws": "set NODE_ENV=local&& npx node aws/run_handler.js",
+    "aws:all": "set NODE_ENV=local&& npx node aws/send_all_emails.js",
+    "aws:dev": "set NODE_ENV=dev&& npx node aws/run_handler.js",
+    "aws:staging": "set NODE_ENV=staging&& npx node aws/run_handler.js",
+    "upload": "node controllers/UploadImagesController.js",
+    "upload:dev": "set NODE_ENV=dev&& npx node controllers/UploadImagesController.js",
+    "upload:staging": "set NODE_ENV=staging&& npx node controllers/UploadImagesController.js",
+    "deploy": "npx serverless deploy --force --stage dev",
+    "deploy:staging": "npx serverless deploy --force --stage staging",
+    "package": "bash package.sh",
+    "artifacts": "bash artifacts.sh",
+    "test": "jest",
+    "test:sender": "jest tests/unit/controllers/SendEmailController.test.js",
+    "test:detect": "jest --detectOpenHandles",
+    "lint": "eslint .",
+    "lint-fix": "eslint --fix ."
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.112.0",
+    "@aws-sdk/client-sqs": "^3.112.0",
+    "custom-env": "^2.0.1",
+    "handlebars": "^4.7.7",
+    "nodemailer": "^6.7.5",
+    "serverless": "^3.16.0",
+    "serverless-s3-sync": "^3.0.0",
+    "ws": "^8.7.0"
+  },
+  "devDependencies": {
+    "aws-sdk-client-mock": "^1.0.0",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-security": "^1.5.0",
+    "eslint-plugin-sonarjs": "^0.13.0",
+    "he": "^1.2.0",
+    "jest": "^28.1.1"
+  }
+}

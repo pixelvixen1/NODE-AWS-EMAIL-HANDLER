@@ -1,0 +1,47 @@
+{
+  "name": "self-assessment-email-handler",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "maizzle serve",
+    "build": "maizzle build",
+    "build:dev": "set NODE_ENV=dev&& maizzle build dev",
+    "build:staging": "set NODE_ENV=staging&& maizzle build staging",
+    "build:all": "maizzle build&& maizzle build production",
+    "build:all:dev": "set NODE_ENV=dev&& maizzle build&& maizzle build dev",
+    "build:all:staging": "set NODE_ENV=staging&& maizzle build&& maizzle build staging",
+    "app": "set NODE_ENV=local&& npx nodemon node/app.js",
+    "app:dev": "set NODE_ENV=dev&& npx nodemon node/app.js",
+    "app:staging": "set NODE_ENV=staging&& npx nodemon node/app.js",
+    "upload": "node ../email_sender/controllers/UploadImagesController.js",
+    "upload:dev": "set NODE_ENV=dev&& npx node ../email_sender/controllers/UploadImagesController.js",
+    "upload:staging": "set NODE_ENV=staging&& npx node ../email_sender/controllers/UploadImagesController.js",
+    "artifacts": "bash artifacts.sh",
+    "test": "jest",
+    "test:e2e": "npx cypress run",
+    "test:e2e:open": "npx cypress open",
+    "lint": "eslint .",
+    "lint-fix": "eslint --fix ."
+  },
+  "dependencies": {
+    "@maizzle/framework": "^3.0.0",
+    "axios": "^0.27.2",
+    "custom-env": "^2.0.1",
+    "express": "^4.18.1",
+    "handlebars": "^4.7.7",
+    "lodash": "^4.17.21",
+    "nodemailer": "^6.7.5",
+    "serve-index": "^1.9.1"
+  },
+  "devDependencies": {
+    "cypress": "^10.2.0",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-security": "^1.5.0",
+    "eslint-plugin-sonarjs": "^0.13.0",
+    "jest": "^28.1.2",
+    "nodemon": "^2.0.16"
+  }
+}
