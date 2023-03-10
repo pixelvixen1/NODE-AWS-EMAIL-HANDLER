@@ -3,7 +3,7 @@
 ## About
 This project includes two email micro services which work with Amazon Web Services SDK V3, that share the same data and resources yet can be deployed independently using Bitbucket pipelines. 
 
-The Email Builder Application is used to automatically build, generate and store customized, localized (LTR/RTL), rich media email templates using the Maizzle framework, Handlebars, AWS Lambda, EFS, S3 and Cloudflare. These templates can be generated with any language and content, which can be easily set and triggered from messages sent to AWS Lambda, an API endpoint, or simply through the command line.
+The Email Builder Application is used to automatically build, generate and store customized, localized (LTR/RTL), rich media email templates using the Maizzle framework, Handlebars, Node.js, AWS Lambda, EFS, S3 and Cloudflare. These templates can be generated with any language and content, which can be easily set and triggered from messages sent to AWS Lambda, an API endpoint, or simply through the command line.
 
 The Email Sender Serverless Lambda Application receives messages from AWS SQS about the user language, template style and user email data. It retrieves the generated localized template from AWS S3, and then populates it with language data stored in AWS EFS, which then injects and sends the email via AWS SES SMTP.
 
