@@ -10,8 +10,7 @@ node_modules/
 email_builder/directus/
 email_builder/cypress/e2e
 
-dist/images/
-dist/templates_sent/
+dist/
 
 .env*
 
